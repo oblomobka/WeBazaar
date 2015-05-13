@@ -17,8 +17,8 @@ module dreieck_DBS (side=25){
                 [3,4,5],
                 [5,2,0],
                 [0,3,5],
-                [1,4,5],
-                [5,2,1],
+                [1,2,4],
+                [5,4,2],
                 [0,2,1]];
     
     polyhedron( points=POINTS,
