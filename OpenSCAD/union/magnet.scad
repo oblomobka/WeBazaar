@@ -2,22 +2,17 @@
 // (c) Jorge Medal (@oblomobka)  2015.08
 // GPL license
 
-include <../utilities/constants_oblomobka.scad>
+// Librerías que siguen una ruta relativa a este archivo
 include <helpers/presets.scad>
 include <helpers/external_elements.scad>
+use <helpers/external_elements_modules.scad>
 
-use <../utilities/functions_oblomobka.scad>
-use <../utilities/transformations_oblomobka.scad>
-use <../utilities/solids_oblomobka.scad>
-
-
-module magnet (d=6, h=2){
-    
-    $fn=24;
-    color("grey",0.8)
-        translate([0,0,0])
-        cylinder (r=d/2,h=h);
-}
+// Librerías que deben instalarse en el directorio correspondiente 
+// Se pueden encontrar aquí -> https://github.com/oblomobka/OpenSCAD/tree/master/libraries
+include <oblomobka/constants.scad>
+use <oblomobka/functions.scad>
+use <oblomobka/transformations.scad>
+use <oblomobka/solids.scad>
 
 // IMAN FIJO
 {
@@ -26,41 +21,41 @@ module magnet_fixed (   magnet=[6,2],
                         play=[0.3,0,2]
                         ){                     
                             
-$fn=32;                            
-d=magnet[0];
-h=magnet[1];
-d_play=play[0];
-h_play=play[1];
+    $fn=32;                            
+    d=magnet[0];
+    h=magnet[1];
+    d_play=play[0];
+    h_play=play[1];
 
-translate([0,0,-0.1])                  
-    cylinder (r=(d+d_play)/2,h=h+h_play);
+    translate([0,0,-0.1])                  
+        cylinder (r=(d+d_play)/2,h=h+h_play);
                             
-}
+    }
 
 // El rebaje para el imán se realiza sobre una base que se puede introducir manualmente en una pieza
 module magnet_fixed_base (  magnet=[6,2],
                             play=[0.3,0,2],
                             base=[15,4,8]
                             ){                     
-                            
-$fn=32;                            
-d=magnet[0];
-h=magnet[1];
-d_play=play[0];
-h_play=play[1];
+                                
+    $fn=32;                            
+    d=magnet[0];
+    h=magnet[1];
+    d_play=play[0];
+    h_play=play[1];
 
-difference(){
-    // Dibuja la base
-    union(){
-        translate([0,0,-base[1]])pyramid_circumscribed(n=base[2],d2=base[0],d1=base[0]-1,h=1);
-        translate([0,0,-base[1]+1])prism_circumscribed(n=base[2],d=base[0],h=base[1]-1);
+    difference(){
+        // Dibuja la base
+        union(){
+            translate([0,0,-base[1]])pyramid_circumscribed(n=base[2],d2=base[0],d1=base[0]-1,h=1);
+            translate([0,0,-base[1]+1])prism_circumscribed(n=base[2],d=base[0],h=base[1]-1);
+            }
+        // Resta el iman
+        rotate([0,180,0])    
+            magnet_fixed(magnet=magnet,play=play);
         }
-    // Resta el iman
-    rotate([0,180,0])    
-        magnet_fixed(magnet=magnet,play=play);
+                               
     }
-                           
-}
 
 }
 
@@ -74,24 +69,24 @@ module magnet_loose (   magnet=[6,2],
                         play=1           // aquí el juego debe permitir girar el imán en el interior de la pieza     
                         ){
 
-$fn=32;
-d=magnet[0];
-h=magnet[1];                        
-                            
-// diámetro de la esfera donde el imán puede girar libremente
-d_spin=sqrt(pow(d,2)+pow(h,2));
+    $fn=32;
+    d=magnet[0];
+    h=magnet[1];                        
+                                
+    // diámetro de la esfera donde el imán puede girar libremente
+    d_spin=sqrt(pow(d,2)+pow(h,2));
 
 
-union(){
-    translate([0,0,-0.1])
-        cube([d_spin,h,t+d_spin],center=true);
-    translate([0,0,t])       
-        cylinder (r=(d_spin)/2,h=h);
-    translate([0,0,t+h-0.05])       
-        cylinder (r2=(d_spin+play)/2,r1=(d_spin)/2,h=play/2+0.1);
-    translate([0,0,t+h+play/2])
-        cylinder (r=(d_spin+play)/2,h=d_spin+play/2-h);
-    }    
+    union(){
+        translate([0,0,-0.1])
+            cube([d_spin,h,t+d_spin],center=true);
+        translate([0,0,t])       
+            cylinder (r=(d_spin)/2,h=h);
+        translate([0,0,t+h-0.05])       
+            cylinder (r2=(d_spin+play)/2,r1=(d_spin)/2,h=play/2+0.1);
+        translate([0,0,t+h+play/2])
+            cylinder (r=(d_spin+play)/2,h=d_spin+play/2-h);
+        }    
 }
 module magnet_loose_base_open (  magnet=[6,2],
                             t=0.6,
@@ -99,57 +94,57 @@ module magnet_loose_base_open (  magnet=[6,2],
                             base=[15,2,8]
                             ){                     
                             
-$fn=32;                            
-d=magnet[0];
-h=magnet[1];
-d_spin=sqrt(pow(d,2)+pow(h,2));
-h_base=max(base[1],d_spin+play+t-0.1);                                
-                                
+    $fn=32;                            
+    d=magnet[0];
+    h=magnet[1];
+    d_spin=sqrt(pow(d,2)+pow(h,2));
+    h_base=max(base[1],d_spin+play+t-0.1);                                
+                                    
 
-//translate([0,0,h_base])
-difference(){
-    // Dibuja la base
-    union(){
-        translate([0,0,-h_base])pyramid_circumscribed(n=base[2],d2=base[0],d1=base[0]-1,h=1);
-        translate([0,0,-h_base+1])prism_circumscribed(n=base[2],d=base[0],h=h_base-1);
-        }
-    // Resta el contenedor del iman con giro
-    rotate([0,180,0])    
+    //translate([0,0,h_base])
+    difference(){
+        // Dibuja la base
         union(){
-            translate([0,0,t])       
-                cylinder (r=(d_spin)/2,h=h);
-            translate([0,0,t+h-0.05])       
-                cylinder (r2=(d_spin+play)/2,r1=(d_spin)/2,h=play/2+0.1);
-            translate([0,0,t+h+play/2])
-                cylinder (r=(d_spin+play)/2,h=5*d_spin+play/2-h);
-    }   
-    }                           
-}
+            translate([0,0,-h_base])pyramid_circumscribed(n=base[2],d2=base[0],d1=base[0]-1,h=1);
+            translate([0,0,-h_base+1])prism_circumscribed(n=base[2],d=base[0],h=h_base-1);
+            }
+        // Resta el contenedor del iman con giro
+        rotate([0,180,0])    
+            union(){
+                translate([0,0,t])       
+                    cylinder (r=(d_spin)/2,h=h);
+                translate([0,0,t+h-0.05])       
+                    cylinder (r2=(d_spin+play)/2,r1=(d_spin)/2,h=play/2+0.1);
+                translate([0,0,t+h+play/2])
+                    cylinder (r=(d_spin+play)/2,h=5*d_spin+play/2-h);
+            }   
+        }                           
+    }
 
-module magnet_loose_base_close (  magnet=[6,2],
-                            t=0.6,
-                            play=0.6,
-                            base=[15,8,8]
-                            ){                     
+module magnet_loose_base_close (    magnet=[6,2],
+                                    t=0.6,
+                                    play=1,
+                                    base=[15,8,8]
+                                    ){                     
                             
-$fn=32;                            
-d=magnet[0];
-h=magnet[1];
-                                
-d_spin=sqrt(pow(d,2)+pow(h,2));
+    $fn=32;                            
+    d=magnet[0];
+    h=magnet[1];
+                                    
+    d_spin=sqrt(pow(d,2)+pow(h,2));
 
-//translate([0,0,base[1]])
-difference(){
-    // Dibuja la base
-    union(){
-        translate([0,0,-base[1]])pyramid_circumscribed(n=base[2],d2=base[0],d1=base[0]-1,h=1);
-        translate([0,0,-base[1]+1])prism_circumscribed(n=base[2],d=base[0],h=base[1]-1);
-        }
-    // Resta el contenedor del iman con giro
-    rotate([0,180,0])    
-        magnet_loose (  magnet=magnet,t=t,play=play);
-    }                           
-}
+    //translate([0,0,base[1]])
+    difference(){
+        // Dibuja la base
+        union(){
+            translate([0,0,-base[1]])pyramid_circumscribed(n=base[2],d2=base[0],d1=base[0]-1,h=1);
+            translate([0,0,-base[1]+1])prism_circumscribed(n=base[2],d=base[0],h=base[1]-1);
+            }
+        // Resta el contenedor del iman con giro
+        rotate([0,180,0])    
+            magnet_loose (  magnet=magnet,t=t,play=play);
+        }                           
+    }
 
 }
 
@@ -242,7 +237,7 @@ translate([0,2*i,0]){
         }
         
     
-    !translate([2*i,0,0]){
+    translate([2*i,0,0]){
         sector(180)
         magnet_loose_base_close ( magnet=[6,2],
                             t=0.6,

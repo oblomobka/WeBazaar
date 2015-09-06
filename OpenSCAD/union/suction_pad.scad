@@ -1,35 +1,38 @@
-// suction_pad [UNIONS] v.01
-// (c) Jorge Medal (@oblomobka)  2015.04
+// suction_pad [UNIONS] v.02
+// (c) Jorge Medal (@oblomobka)  2015.08
 // GPL license
 
-include <../utilities/constants_oblomobka.scad>
+// Librerías que siguen una ruta relativa a este archivo
 include <helpers/presets.scad>
 include <helpers/external_elements.scad>
+use <helpers/external_elements_modules.scad>
 
-use <../utilities/functions_oblomobka.scad>
-use <../utilities/transformations_oblomobka.scad>
-use <../utilities/solids_oblomobka.scad>
+// Librerías que deben instalarse en el directorio correspondiente 
+// Se pueden encontrar aquí -> https://github.com/oblomobka/OpenSCAD/tree/master/libraries
+include <oblomobka/constants.scad>
+use <oblomobka/functions.scad>
+use <oblomobka/transformations.scad>
+use <oblomobka/solids.scad>
 
-//////////////////////////////////////
-// PIN (+)
-//////////////////////////////////////
+
+// HUECO PARA METER UNA VENTOSA
 module suction_pad_shaft (  suction_pad_head=[7,4,4,3]){
     
-$fn=50;
-d_head=suction_pad_head[0];
-h_head=suction_pad_head[1];
-d_neck=suction_pad_head[2];
-h_neck=suction_pad_head[3];
-play=0.3;
-    
-union(){
-    translate([0,0,h_neck-0.5])
-        cylinder(r=d_head/2+play ,h=h_head+play );
-    translate([0,0,(h_neck-0.5)/2])
-        cylinder(r=(d_neck+1)/2+play ,h=h_neck );
-    translate([0,0,-h_neck+0.1])
-        cylinder(r1=d_head/2 ,r2=(d_neck+1)/2+play ,h=h_neck+(h_neck-0.5)/2 );
-}  
+    $fn=50;
+    d_head=suction_pad_head[0];
+    h_head=suction_pad_head[1];
+    d_neck=suction_pad_head[2];
+    h_neck=suction_pad_head[3];
+    play=0.3;
+        
+    union(){
+        translate([0,0,h_neck-0.5])
+            cylinder(r=d_head/2+play ,h=h_head+play );
+        translate([0,0,(h_neck-0.5)/2])
+            cylinder(r=(d_neck+1)/2+play ,h=h_neck );
+        translate([0,0,-h_neck+0.1])
+            cylinder(r1=d_head/2 ,r2=(d_neck+1)/2+play ,h=h_neck+(h_neck-0.5)/2 );
+    }  
 }
 
 module suction_pad_base (   suction_pad_head=[7,4,4,3],
@@ -60,44 +63,9 @@ difference(){
 }
 
 
-module suction_pad (head=[7,4,4,2.5], suction=[20,7]){
-
-
-$fn=50;
-d_head=head[0];
-h_head=head[1];
-d_neck=head[2];
-h_neck=head[3];
-    
-d_suction=suction[0];
-h_suction=suction[1];
-    
- color("white",0.8)
-   translate([0,0,-0.3]) 
-    union(){
-    translate([0,0,0])
-        cylinder(r=d_neck/2,h=h_neck+0.1 );
-    translate([0,0,h_neck])
-        cylinder(r1=d_head/2,r2=(d_neck-1)/2 ,h=h_head );
-    translate([0,0,-1])
-        cylinder(r=(d_head+2)/2,,h=1 );
-    difference(){
-        translate([0,0,-h_suction])
-        cylinder(r1=d_suction/2,r2=(d_head)/2 ,h=h_suction);
-        translate([0,0,-h_suction-0.5])
-        cylinder(r1=d_suction/2,r2=(d_neck)/2 ,h=h_suction-2);
-    }
-    
-}  
-}
-
-//////////////////////////////////////
 // EJEMPLOS
-//////////////////////////////////////
 
 i=30;
-
-*suction_pad (head=[7,4,4,2.5], suction=[20,7]);
 
 translate([0,0,0]){
     sector(270)

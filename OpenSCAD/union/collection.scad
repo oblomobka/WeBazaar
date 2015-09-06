@@ -2,13 +2,10 @@
 // (c) Jorge Medal (@oblomobka)  2015.08
 // GPL license
 
-include <../utilities/constants_oblomobka.scad>
+// Librerías que siguen una ruta relativa a este archivo
 include <helpers/presets.scad>
 include <helpers/external_elements.scad>
-
-use <../utilities/functions_oblomobka.scad>
-use <../utilities/transformations_oblomobka.scad>
-use <../utilities/solids_oblomobka.scad>
+use <helpers/external_elements_modules.scad>
 
 use <shaft.scad>
 use <magnet.scad>
@@ -18,6 +15,13 @@ use <snap_fasteners.scad>
 use <spike.scad>
 use <suction_pad.scad>
 use <total_joint.scad>
+
+// Librerías que deben instalarse en el directorio correspondiente 
+// Se pueden encontrar aquí -> https://github.com/oblomobka/OpenSCAD/tree/master/libraries
+include <oblomobka/constants.scad>
+use <oblomobka/functions.scad>
+use <oblomobka/transformations.scad>
+use <oblomobka/solids.scad>
 
 //create a dodecahedron by intersecting 6 boxes
 module dodecahedron(height) {
@@ -93,29 +97,29 @@ difference(){
     dodecahedron(h_dodecahedron);
     
     //POINT(h=h_dodecahedron, face=FACE_1)            
-    //   shaft_base (shaft=[d,h],play=[p1,p2],polygonal=n);
+    //   shaft_base (base=[d,h,n],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_2)            
-        shaft_base (shaft=[15,5],play=[p1,p2],polygonal=8);
+        shaft_base (base=[15,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_3)            
-        shaft_base (shaft=[15,8],play=[p1,p2],polygonal=8);
+        shaft_base (base=[15,8,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_4)            
         socket (pin=[12,15,SIMPLE]);
     POINT(h=h_dodecahedron, face=FACE_6)            
-        shaft(shaft=[8,20],deep=0.5,play=0.2);
+        shaft(dowel=[8,20],deep=0.5,play=0.2);
     POINT(h=h_dodecahedron, face=FACE_5)            
-        shaft_base (shaft=[15,5],play=[p1,p2],polygonal=8);
+        shaft_base (base=[15,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_7)            
-        shaft_base (shaft=[15,5],play=[p1,p2],polygonal=8);
+        shaft_base (base=[15,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_8)            
-        shaft_base (shaft=[15,5],play=[p1,p2],polygonal=8);
+        shaft_base (base=[15,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_9)            
-        shaft_base (shaft=[15,8],play=[p1,p2],polygonal=8);
+        shaft_base (base=[15,8,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_10)            
-        shaft_base (shaft=[15,5],play=[p1,p2],polygonal=8);
+        shaft_base (base=[15,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_11)            
-        shaft_base (shaft=[15,5],play=[p1,p2],polygonal=8);
+        shaft_base (base=[15,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_12)            
-        shaft_base (shaft=[15,5],play=[p1,p2],polygonal=8);
+        shaft_base (base=[15,5,8],play=[p1,p2]);
                
 }
 

@@ -1,27 +1,27 @@
-// total_joint [UNIONS]
+// total_joint [UNIONS] v.02
 // (C) @oblomobka - 2015.04
 // GPL license
 
-include <../utilities/constants_oblomobka.scad>
+// Librerías que siguen una ruta relativa a este archivo
 include <helpers/presets.scad>
 include <helpers/external_elements.scad>
+use <helpers/external_elements_modules.scad>
 
-use <../utilities/functions_oblomobka.scad>
-use <../utilities/transformations_oblomobka.scad>
-use <../utilities/solids_oblomobka.scad>
+// Librerías que deben instalarse en el directorio correspondiente 
+// Se pueden encontrar aquí -> https://github.com/oblomobka/OpenSCAD/tree/master/libraries
+include <oblomobka/constants.scad>
+use <oblomobka/functions.scad>
+use <oblomobka/transformations.scad>
+use <oblomobka/solids.scad>
 
 //	Límites
 d_pin_minmax=[10,30];			//	d_pin=lim(d_pin_minmax[0],pin[0],d_pin_minmax[1]);			
 h_pin_minmax=[0,10];			//	h_pin=lim(h_pin_minmax[0],pin[1],h_pin_minmax[1]);
 
-///////////////////////////////////
 // TOTAL JOINTS
-///////////////////////////////////
 {
-///////////////////////////////////
 // Uniones sueltas.
-// Piezas utiles para colocar manualmente en cualquier volumen que dispongan del hueco necesario (total_joint_shaft())
-///////////////////////////////////
+// Piezas utiles para colocar manualmente en cualquier volumen que dispongan del hueco necesario (shaft_base() definido en shaft.scad)
 {
 module total_joint_sphere (	pin=[15,4],		// Medidas generales de la union [diámetro total, altura y diámetro del pin]
 							angle=360,
@@ -168,14 +168,10 @@ difference(){
 		}
 	}
 }
-
-
 }
-///////////////////////////////////
 // Incorporan la union a un volumen cualquiera.
 // Funciona como una transformación.
 // Debe ir en una cara paralela a la superficie de impresión
-///////////////////////////////////
 {
 module TotalJointSphere (	pin=[15,4],
                             angle=360,
@@ -291,32 +287,10 @@ difference(){
 translate([cos(direction)*d_rail/2,sin(direction)*d_rail/2,z])pin_head(d=d_pin,h=h_pin,res=res);
 }
 }
-
 }
 
-// Prisma para sustraer de una forma.
-// Se sebe colocar donde haya que colocar la union
-module total_joint_shaft (	pin=[15,4],		// Medidas generales de la union [diámetro total, altura y diámetro del pin]
-				play=[0.5,0.2],	// [juego del diámetro, juego de altura]
-				polygonal=50)	// // Forma del contenedor del Pin. Cilindrico por defecto. El valor marca el polígono (circunscrito en la circunferencia de diametro_total pin[0]
-							{
-
-h_pin=lim(h_pin_minmax[0],pin[1],h_pin_minmax[1]);
-d_total=lim(d_pin_minmax[0],pin[0],d_pin_minmax[1]);
-
-d_play=play[0];			
-h_play=play[1];			
-
-translate([0,0,-0.1])
-	prism_circumscribed(n=polygonal,d=d_total+d_play,h=h_pin+1+0.1+h_play);
 }
-
-
-
-}
-///////////////////////////////////
 // EJEMPLOS
-///////////////////////////////////
 
 i=30;
 
@@ -335,22 +309,6 @@ translate([0,0,0]){
 
     translate([0,3*i,0])
         total_joint_sphere	(pin=[25,4],mode=2,angle=360,play=0,polygonal=32,res=res);
-
-}
-
-translate([i,0,0]){
-
-    translate([0,0,0])
-        total_joint_shaft	(pin=[30,4],play=[0,0],polygonal=8);
-    
-    translate([0,i,0])
-        total_joint_shaft	(pin=[12,8],play=[0,0],polygonal=4);
-    
-    translate([0,2*i,0])
-        total_joint_shaft	(pin=[20,6],play=[0,0],polygonal=50);
-
-    translate([0,3*i,0])
-        total_joint_shaft	(pin=[15,4],play=[0,0],polygonal=6);
 
 }
 

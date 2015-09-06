@@ -1,23 +1,23 @@
-// spike [UNIONS] v.01
-// (c) Jorge Medal (@oblomobka)  2015.04
+// spike [UNIONS] v.02
+// (c) Jorge Medal (@oblomobka)  2015.08
 // GPL license
 
 // Union paramétrica basada en los Open Toys de le FabShop (www.lefabshop.fr)
 // http://www.thingiverse.com/thing:554850/#files
 
-include <../utilities/constants_oblomobka.scad>
+// Librerías que siguen una ruta relativa a este archivo
 include <helpers/presets.scad>
 include <helpers/external_elements.scad>
+use <helpers/external_elements_modules.scad>
 
-use <../utilities/functions_oblomobka.scad>
-use <../utilities/transformations_oblomobka.scad>
-use <../utilities/solids_oblomobka.scad>
-use <../utilities/shapes_oblomobka.scad>
+// Librerías que deben instalarse en el directorio correspondiente 
+// Se pueden encontrar aquí -> https://github.com/oblomobka/OpenSCAD/tree/master/libraries
+include <oblomobka/constants.scad>
+use <oblomobka/functions.scad>
+use <oblomobka/transformations.scad>
+use <oblomobka/solids.scad>
 
-//////////////////////////////////////
 // SPIKE
-//////////////////////////////////////
-
 module spike(   d=8,
                 h=15,
                 t=1,
@@ -44,12 +44,9 @@ translate([0,0,-0.1])
             }      
 }
 
-
-
 module spike_base ( spike=[8,12,0.6,75],
                     base=[15,4,8]
                     ){
-
     union(){
         // Dibuja la base
         translate([0,0,-base[1]])pyramid_circumscribed(n=base[2],d2=base[0],d1=base[0]-1,h=1);
@@ -60,9 +57,8 @@ module spike_base ( spike=[8,12,0.6,75],
    
 }
 
-//////////////////////////////////////
+
 // EJEMPLOS
-//////////////////////////////////////
 
 i=20;
 
