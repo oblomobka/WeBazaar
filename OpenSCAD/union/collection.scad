@@ -1,5 +1,5 @@
-// Muestrario [UNIONS] v.01
-// (c) Jorge Medal (@oblomobka)  2015.04
+// Muestrario [UNIONS] v.02
+// (c) Jorge Medal (@oblomobka)  2015.08
 // GPL license
 
 include <../utilities/constants_oblomobka.scad>
@@ -136,7 +136,7 @@ difference(){
             }}
     POINT(h=h_dodecahedron, face=FACE_3)
         rotate([0,180,0])
-        magnet_loose_base2 ( magnet=[6,2],
+        magnet_loose_base_close ( magnet=[6,2],
                             t=0.6,
                             play=0.6,
                             base=[15,8,8]);

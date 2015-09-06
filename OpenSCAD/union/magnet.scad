@@ -93,7 +93,7 @@ union(){
         cylinder (r=(d_spin+play)/2,h=d_spin+play/2-h);
     }    
 }
-module magnet_loose_base (  magnet=[6,2],
+module magnet_loose_base_open (  magnet=[6,2],
                             t=0.6,
                             play=0.6,
                             base=[15,2,8]
@@ -126,7 +126,7 @@ difference(){
     }                           
 }
 
-module magnet_loose_base2 (  magnet=[6,2],
+module magnet_loose_base_close (  magnet=[6,2],
                             t=0.6,
                             play=0.6,
                             base=[15,8,8]
@@ -229,7 +229,7 @@ translate([0,2*i,0]){
     
     translate([i,0,0]){
         sector(270) // para ver el interior. Cegar esta linea para generar stl
-        magnet_loose_base ( magnet=[6,2],
+        magnet_loose_base_open ( magnet=[6,2],
                             t=0.6,
                             play=0.6,
                             base=[10,1,8]);
@@ -242,12 +242,12 @@ translate([0,2*i,0]){
         }
         
     
-    translate([2*i,0,0]){
+    !translate([2*i,0,0]){
         sector(180)
-        magnet_loose_base2 ( magnet=[6,2],
+        magnet_loose_base_close ( magnet=[6,2],
                             t=0.6,
                             play=0.6,
-                            base=[10,8,50]);
+                            base=[10,10,50]);
         
         // Imán 
         translate([0,0,-(0.5+sqrt(pow(6,2)+pow(2,2))/2)])
@@ -258,10 +258,10 @@ translate([0,2*i,0]){
     
     translate([3*i,0,0]){
         sector(180)
-        magnet_loose_base ( magnet=[6,2],
+        magnet_loose_base_open ( magnet=[6,2],
                             t=0.6,
                             play=0.6,
-                            base=[12,8,50]);
+                            base=[12,12,50]);
         
         // Imán 
         translate([0,0,-(0.5+sqrt(pow(6,2)+pow(2,2))/2)])
