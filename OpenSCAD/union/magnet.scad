@@ -1,5 +1,5 @@
-// magnet [UNIONS] v.01
-// (c) Jorge Medal (@oblomobka)  2015.04
+// magnet [UNIONS] v.02
+// (c) Jorge Medal (@oblomobka)  2015.08
 // GPL license
 
 include <../utilities/constants_oblomobka.scad>
@@ -11,9 +11,15 @@ use <../utilities/transformations_oblomobka.scad>
 use <../utilities/solids_oblomobka.scad>
 
 
-//////////////////////////////////////
+module magnet (d=6, h=2){
+    
+    $fn=24;
+    color("grey",0.8)
+        translate([0,0,0])
+        cylinder (r=d/2,h=h);
+}
+
 // IMAN FIJO
-//////////////////////////////////////
 {
 // representa el volumen del iman que se debe eliminar de la pieza donde se pegará
 module magnet_fixed (   magnet=[6,2],
@@ -57,9 +63,8 @@ difference(){
 }
 
 }
-//////////////////////////////////////
+
 // IMAN SUELTO
-//////////////////////////////////////
 {
 // representa un contenedor donde el iman puede girar libremente para escoger el polo apropiado
 // se debe restar de la pieza donde se quiera incorporar
@@ -146,18 +151,6 @@ difference(){
     }                           
 }
 
-}
-//////////////////////////////////////
-// IMAN ESFERA
-//////////////////////////////////////
-
-
-module magnet (d=6, h=2){
-    
-    $fn=24;
-    color("grey",0.8)
-        translate([0,0,0])
-        cylinder (r=d/2,h=h);
 }
 
 i=30;
@@ -268,7 +261,7 @@ translate([0,2*i,0]){
         magnet_loose_base ( magnet=[6,2],
                             t=0.6,
                             play=0.6,
-                            base=[12,12,50]);
+                            base=[12,8,50]);
         
         // Imán 
         translate([0,0,-(0.5+sqrt(pow(6,2)+pow(2,2))/2)])
