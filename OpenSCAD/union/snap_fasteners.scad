@@ -7,7 +7,8 @@ include <helpers/presets.scad>
 include <helpers/external_elements.scad>
 use <helpers/external_elements_modules.scad>
 
-// Librerías que deben instalarse en el directorio correspondiente 
+// Librerías que deben instalarse en Built-In library location
+// según https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Libraries 
 // Se pueden encontrar aquí -> https://github.com/oblomobka/OpenSCAD/tree/master/libraries
 include <oblomobka/constants.scad>
 use <oblomobka/functions.scad>

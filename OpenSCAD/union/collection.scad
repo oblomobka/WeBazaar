@@ -16,7 +16,8 @@ use <spike.scad>
 use <suction_pad.scad>
 use <total_joint.scad>
 
-// Librerías que deben instalarse en el directorio correspondiente 
+// Librerías que deben instalarse en Built-In library location
+// según https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Libraries 
 // Se pueden encontrar aquí -> https://github.com/oblomobka/OpenSCAD/tree/master/libraries
 include <oblomobka/constants.scad>
 use <oblomobka/functions.scad>
