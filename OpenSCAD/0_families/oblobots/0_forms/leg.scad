@@ -1,21 +1,20 @@
-// leg[OBLOBOTS]
-// (c) Jorge Medal (@oblomobka) - Sara Alvarellos (@trecedejunio) 2015.04 - v.12
+// Leg [OBLOBOTS] v.12
+// preform
+// (c) Jorge Medal (@oblomobka) 2015.09
 // GPL license
 
-include <../helpers/presets.scad>
-include <../helpers/limits.scad>
+include <../2_helpers/external_elements.scad>
+include <../2_helpers/presets_oblobots.scad>
+include <../2_helpers/limits_oblobots.scad>
 
-use <../../../utilities/functions_oblomobka.scad>
-use <../../../utilities/solids_oblomobka.scad>
-use <hip.scad>
+use <oblomobka/functions.scad>
+use <oblomobka/shapes.scad>
+use <oblomobka/solids.scad>
 
-//////////////////////////////////////////
-// PIERNAS CURVAS 
-//////////////////////////////////////////
-
-module leg_cylindrical (	leg=[12,45],		// [d,h] Medidas de la pierna (la altura incluye el pie)
-                            foot=[40,5]		    // [long,h] Medidas del pie
-						){
+// Módulo
+module leg_cylindrical (	leg=[12,45],	// [d,h] Medidas de la pierna (la altura incluye el pie)
+                            foot=[40,5]		// [long,h] Medidas del pie
+                            ){
 $fn=50;
 
 // valores con límites: acotados entre un máximo y un mínimo (los valores límite están en <limits_oblobots.scad>)
@@ -63,12 +62,8 @@ rotate([0,0,90])
 		}
 }
 
-//////////////////////////////////////////
-// PIERNAS RECTAS 
-//////////////////////////////////////////
-
 module leg_quadrangle (	leg=[10,15,8], 		// [ d, h, num de lados ] Medidas de la pierna (incluye el pie)
-						foot	=[35,4]		// [ long, h ] Medidas dele pie
+						foot	=[35,4]			// [ long, h ] Medidas dele pie
 						){
 
 // valores con límites: acotados entre un máximo y un mínimo (los valores límite están en <limits_oblobots.scad>)
@@ -117,17 +112,13 @@ rotate([0,0,90])
 		}
 }
 
-
-
-//////////////////////////////////////////
-// EJEMPLOS 
-//////////////////////////////////////////
+// Ejemplos
 
 translate([20,0,0])
 	rotate([0,0,90])
-		leg_cylindrical(leg=[20,70],foot=[50,8]);
+		leg_cylindrical(leg=[20,70],foot=[65,25]);
 
 translate([-20,0,0])
 	rotate([0,0,90])
-		leg_quadrangle(leg=[16,75,5],foot=[60,15]);
+		leg_quadrangle(leg=[25,55,7],foot=[55,8]);
 

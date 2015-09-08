@@ -1,15 +1,9 @@
-// limits [OBLOBOTS]
-// (c) Jorge Medal @oblomobka - 2015.04
-// GPL license
-
 
 //PIN
-{
-	d_pin_minmax=[10,30];			//	d_pin=lim(d_pin_minmax[0],pin[0],d_pin_minmax[1]);			
-	h_pin_minmax=[0,10];			//	h_pin=lim(h_pin_minmax[0],pin[1],h_pin_minmax[1]);
-}
-//LEGS | FOOTS
-{
+	d_pin_minmax=[3,30];			//	d_pin=lim(d_pin_minmax[0],pin[0],d_pin_minmax[1]);			
+	h_pin_minmax=[0,100];			//	h_pin=lim(h_pin_minmax[0],pin[1],h_pin_minmax[1]);
+
+//LEGS & FOOTS
 	d_leg_minmax=[10,30];			//	d_leg=lim(d_leg_minmax[0],leg[0],d_leg_minmax[1]);
 	h_leg_minmax=[20,90];			//	h_leg=lim(h_leg_minmax[0],leg[1],h_leg_minmax[1]);	
 	n_leg_minmax=[4,16];			//	n_leg=lim(n_leg_minmax[0],leg[2],n_leg_minmax[1]);
@@ -19,11 +13,11 @@
 	h_foot_minmax=[0,40];			//	h_foot=lim(h_foot_minmax[0],foot[1],h_foot_minmax[1]);
 
 	//MULTILEGS
-	h1_hip_minmax=[3,50];		//	h1_hip=lim(h1_hip_minmax[0],h_hip[0],h1_hip_minmax[1]);
-	h2_hip_minmax=[10,50];		//	h2_hip=lim(h2_hip_minmax[0],h_hip[1],h2_hip_minmax[1]);
+	h1_pelvis_minmax=[3,50];		//	h1_pelvis=lim(h1_pelvis_minmax[0],h_pelvis[0],h1_pelvis_minmax[1]);
+	h2_pelvis_minmax=[10,50];		//	h2_pelvis=lim(h2_pelvis_minmax[0],h_pelvis[1],h2_pelvis_minmax[1]);
 
-	d1_hip_minmax=[20,100];	//	d1_hip=lim(d1_hip_minmax[0],d_hip[0],d1_hip_minmax[1]);
-	d2_hip_minmax=[5,80];		//	d2_hip=lim(d2_hip_minmax[0],d_hip[1],d1_hip-5);
+	d1_pelvis_minmax=[20,100];	//	d1_pelvis=lim(d1_pelvis_minmax[0],d_pelvis[0],d1_pelvis_minmax[1]);
+	d2_pelvis_minmax=[5,80];		//	d2_pelvis=lim(d2_pelvis_minmax[0],d_pelvis[1],d1_pelvis-5);
 	
 	n_multilegs_minmax=[3,8];		//	n_multilegs=lim(n_multilegs_minmax[0],n,n_multilegs_minmax[1]);
 
@@ -31,11 +25,10 @@
 	l2_leg_minmax=[5,60];			//	l2_leg=lim(l2_leg_minmax[0],l_leg[1],l2_leg_minmax[1]);
 	ang1_leg_minmax=[0,90];		//	ang1_leg=lim(ang1_leg_minmax[0],ang_leg[0],ang1_leg_minmax[1]);
 	ang2_leg_minmax=[0,90];		//	ang2_leg=lim(ang2_leg_minmax[0],ang_leg[1],ang2_leg_minmax[1]);
-}
+
 
 
 //HIP | WAIST
-{
 	//C
 	d_hip_minmax=[25,80];			//	d_hip=lim(d_hip_minmax[0],hip[0],d_hip_minmax[1]);
 	h_hip_minmax=[10,70];			//	h_hip=lim(h_pin+2,hip[1],h_hip_minmax[1]);
@@ -55,10 +48,9 @@
 	n_waist_minmax=[4,50];		//	n_waist=lim(n_waist_minmax[0],waist[3],n_waist_minmax[1]);
 								//	d1_waist=lim(d_pin,waist[0],min(x_hip,y_hip));
 								//	d2_waist=lim(d_pin,waist[1],d1_waist);
-}
+
 
 //TRUNK | SHOULDER | NECK
-{
 	//C
 	d1_trunk_minmax=[30,100];		//	d1_trunk=lim(d1_trunk_minmax[0],trunk[0],d1_trunk_minmax[1]); 
 	d2_trunk_minmax=[30,100];		//	d2_trunk=lim(d2_trunk_minmax[0],trunk[1],d1_trunk);
@@ -85,9 +77,8 @@
 	d_polygonal_trunk_minmax=[45,80];	//d_polygonal_trunk=lim(d_polygonal_trunk_minmax[0],trunk[0],d_polygonal_trunk_minmax[1]);							
 	h_polygonal_trunk_minmax=[87,120];	//h_polygonal_trunk=lim(h_polygonal_trunk_minmax[0],trunk[1],h_polygonal_trunk_minmax[1]);
 	thickness_trunk_minmax=[1,6];	//thickness_trunk=lim(thickness_trunk_minmax[0],trunk[2],thickness_trunk_minmax[1]);
-}
+
 // ARMS | HANDS
-{
 	// C
 	d_arm_minmax=[10,40];			// 	d_arm=lim(d_arm_minmax[0],arm[0],d_arm_minmax[1]);
 								//	d_arm=lim(d_pin+1,arm[0],d_arm_minmax[1]);	
@@ -106,9 +97,8 @@
 
 	n_hand_minmax=[4,12];			// 	n_hand=lim(n_hand_minmax[0],2*floor(hand[2]/2),n_hand_minmax[1]);
 								//	h_hand=lim(h_hand_minmax[0],hand[1],x_arm-0.5);
-}
+
 // HEAD | EYES | BRAIN
-{
 	// C
 	h_head_minmax=[20,100];		// 	h_head=lim(h_head_minmax[0],head[2],h_head_minmax[1]);
 	d1_head_minmax=[20,60];		// 	d1_head=lim(d1_head_minmax[0],head[0],d1_head_minmax[1]);
@@ -134,11 +124,12 @@
 	ds_head_minmax=[10,60];			//ds_head=lim(ds_head_minmax[0],head[1],ds_head_minmax[1]);	
 	hs_head_minmax=[20,100];			//hs_head=lim(ds_head,head[2],hs_head_minmax[1]);
 	db_head_minmax=[15,150];			//db_head=lim(db_head_minmax[0],head[0],db_head_minmax[1]);	
-}
+
 //BADGE
-{
 	d_badge_minmax=[20,40];		//	d_badge=lim(d_badge_minmax[0],badge[0],d_badge_minmax[1])
 	h_badge_minmax=[0.5,5];		// 	h_badge=lim(h_badge_minmax[0],badge[1],h_badge_minmax[1]);
 	n_badge_minmax=[4,50];		// 	n_badge=lim(n_badge_minmax[0],badge[3],n_badge_minmax[1]);
 	edge_badge_minmax=[1,5];		//	edge_badge=lim(edge_badge_minmax[0],badge[2],edge_badge_minmax[1]);
-}
+
+
+

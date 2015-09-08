@@ -3,9 +3,9 @@
 // GPL license
 
 // Librerías que siguen una ruta relativa a este archivo
-include <helpers/presets.scad>
-include <helpers/external_elements.scad>
-use <helpers/external_elements_modules.scad>
+include <../2_helpers/presets_unions.scad>
+include <../2_helpers/external_elements.scad>
+use <../2_helpers/external_elements_modules.scad>
 
 // Librerías que deben instalarse en Built-In library location
 // según https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Libraries 

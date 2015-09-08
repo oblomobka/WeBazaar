@@ -1,16 +1,17 @@
-// hip[OBLOBOTS]
-// (c) Jorge Medal (@oblomobka) - Sara Alvarellos (@trecedejunio) 2015.04 - v.12
+// HIP [OBLOBOTS] v.12
+// preform
+// (c) Jorge Medal (@oblomobka) 2015.09
 // GPL license
 
-include <../helpers/presets.scad>
-include <../helpers/limits.scad>
+include <../2_helpers/external_elements.scad>
+include <../2_helpers/presets_oblobots.scad>
+include <../2_helpers/limits_oblobots.scad>
 
-use <../../../utilities/functions_oblomobka.scad>
-use <../../../utilities/solids_oblomobka.scad>
+use <oblomobka/functions.scad>
+use <oblomobka/shapes.scad>
+use <oblomobka/solids.scad>
 
-//////////////////////////////////////////
-// CADERAS CURVAS 
-//////////////////////////////////////////
+// Módulos
 module hip_cylindrical(hip=[40,15,80]){		// [ d,h,f ] Medidas de la cadera
 
 	// valores con límites: acotados entre un máximo y un mínimo (los valores límite están en <limits_oblobots.scad>)
@@ -34,10 +35,6 @@ module hip_cylindrical(hip=[40,15,80]){		// [ d,h,f ] Medidas de la cadera
 		}
 }
 
-
-//////////////////////////////////////////
-// CADERA RECTAS  
-//////////////////////////////////////////
 module hip_quadrangle (hip=[40,22,18,3]){	// [ ancho(x), fondo(y), altura(z), chaflán ] Medidas de la cadera
 
 	x_hip=lim(x_hip_minmax[0],hip[0],x_hip_minmax[1]);					// medida de la cadera: ancho
@@ -57,14 +54,12 @@ module hip_quadrangle (hip=[40,22,18,3]){	// [ ancho(x), fondo(y), altura(z), ch
 		}
 }
 
+// Ejemplos
 
-//////////////////////////////////////////
-// EJEMPLOS  
-//////////////////////////////////////////
 i=35;
 
 translate([i,0,0])
-	hip_cylindrical(hip=[40,30,25]);
+	hip_cylindrical(hip=[47,20,80]);
 
 translate([-i,0,0])
 	hip_quadrangle(hip=[50,25,25,4]);

@@ -1,21 +1,24 @@
-// trunk[OBLOBOTS]
-// (c) Jorge Medal (@oblomobka) - Sara Alvarellos (@trecedejunio) 2015.04 - v.12
+// Trunk [OBLOBOTS] v.12
+// preform
+// (c) Jorge Medal (@oblomobka) 2015.09
 // GPL license
 
-include <../helpers/presets.scad>
-include <../helpers/limits.scad>
+include <../2_helpers/external_elements.scad>
+include <../2_helpers/presets_oblobots.scad>
+include <../2_helpers/limits_oblobots.scad>
 
-use <../../../utilities/functions_oblomobka.scad>
-use <../../../utilities/solids_oblomobka.scad>
+use <oblomobka/functions.scad>
+use <oblomobka/shapes.scad>
+use <oblomobka/solids.scad>
 
-//////////////////////////////////////////
-// TRONCOS CURVOS 
-//////////////////////////////////////////
+//use <badges.scad>
 
+
+// Módulo
 module trunk_cylindrical    (	trunk=[40,30,32],
                                 shoulder=[15,3,0.5]
                                 ){
-                       
+
 // valores con límites: acotados entre un máximo y un mínimo (los valores límite están en <limits_oblobots.scad>)
 d1_trunk=lim(d1_trunk_minmax[0],trunk[0],d2_trunk_minmax[1]);		// medida del cuerpo: diametro base 
 d2_trunk=lim(d2_trunk_minmax[0],trunk[1],d1_trunk); 				// medida del cuerpo: diametro punta 
@@ -75,13 +78,10 @@ rotate([0,angle_trunk,0])rotate([0,0,180])translate([0,0,0])
 // Fin de los módulos auxiliares
 }
 
-//////////////////////////////////////////
-// TRONCOS RECTOS 
-//////////////////////////////////////////
-module trunk_quadrangle     (	trunk=[42,20,32],	// medida del cuerpo: [ ancho (x), fondo (y), altura (z) ]
-                                T=1				// Tipo de hombro:	1 -> 3 chaflanes
+module trunk_quadrangle (	trunk=[42,20,32],	// medida del cuerpo: [ ancho (x), fondo (y), altura (z) ]
+                            T=1				    // Tipo de hombro:	1 -> 3 chaflanes
                                                 //					2 -> 4 chaflanes
-                                ){
+						){
 $fn=50;
 
 // valores con límites: acotados entre un máximo y un mínimo
@@ -152,18 +152,15 @@ if(S<=1){
 }
 // ----- Fin de los módulos auxiliares ------------
 }
-
-
-
-//////////////////////////////////////////
-// EJEMPLOS
-//////////////////////////////////////////
+// Ejemplos
 
 i=70;
 
 // Con forma de caja
-trunk_quadrangle(trunk=[42,24,40],T=2);
+trunk_quadrangle(trunk=[42,24,40],T=1);
+
 
 // Conicos y cilindricos
 translate([i,0,0])
 	trunk_cylindrical(trunk=[45,35,48],shoulder=[18,10,6]);
+

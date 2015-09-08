@@ -1,10 +1,8 @@
-// presets [UNIONS] 
-// (c) Jorge Medal (@oblomobka) 2015.04 v.12
+// presets [UNIONS] v.12
+// (c) Jorge Medal (@oblomobka) 2015.09
 // GPL license
 
-//////////////////////////////////////
 // CARACTERÍSTICAS DEL PIN
-//////////////////////////////////////
 
 SIMPLE=[0,0,0];					// cilindro 
 

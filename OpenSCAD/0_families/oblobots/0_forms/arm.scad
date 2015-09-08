@@ -1,22 +1,22 @@
-// arm[OBLOBOTS]
-// (c) Jorge Medal (@oblomobka) - Sara Alvarellos (@trecedejunio) 2015.04 - v.12
+// arm [OBLOBOTS] v.12
+// pre-form
+// (c) Jorge Medal (@oblomobka) 2015.09
 // GPL license
 
-include <../helpers/presets.scad>
-include <../helpers/limits.scad>
+include <../2_helpers/external_elements.scad>
+include <../2_helpers/presets_oblobots.scad>
+include <../2_helpers/limits_oblobots.scad>
 
-use <../../../utilities/functions_oblomobka.scad>
-use <../../../utilities/solids_oblomobka.scad>
+use <oblomobka/functions.scad>
+use <oblomobka/shapes.scad>
+use <oblomobka/solids.scad>
 
-//////////////////////////////////////////
-// BRAZOS CURVOS  
-//////////////////////////////////////////
-
+// Módulos
 module arm_cylindrical (	arm=[18,6,45],		// [d,h,l]
                             hand=[27,4,120]		// [d,h,ang]
                             ){
 
-// valores con límites: acotados entre un máximo y un mínimo (los valores límite están en <limits.scad>)
+// valores con límites: acotados entre un máximo y un mínimo (los valores límite están en <limits_oblobots.scad>)
 d_arm=lim(d_arm_minmax[0],arm[0],d_arm_minmax[1]);			// medida del brazo: fondo
 h_arm=lim(h_arm_minmax[0],arm[1],h_arm_minmax[1]);			// medida del brazo: ancho
 
@@ -78,13 +78,8 @@ union(){
 	}
 }
 
-
-//////////////////////////////////////////
-// BRAZOS RECTOS  
-//////////////////////////////////////////
-
 module arm_quadrangle (	arm=[10,15,70],		// [ grosor(x), fondo(y), longitud(z) ] Medidas de los Brazo
-						hand=[20,5,8]       // [d,h,n poligono]
+						hand=[20,5,8]
 						){
 
 x_arm=lim(x_arm_minmax[0],arm[1],x_arm_minmax[1]);					// medida del brazo: grosor
@@ -114,7 +109,7 @@ union(){
 			translate([z_i_arm,0,x_arm-h_wrist/2])
 				cube([wrist,wrist,h_wrist],center=true);
 			}
-		//rebaje del hombro / forma poligonal
+		// rebaje del hombro / forma poligonal
 		//translate([0,0,x_arm/2+2])
 			//prism_circumscribed (n=n_hand,d=2*y_arm/4,h=x_arm/2);
 		}
@@ -130,17 +125,14 @@ union(){
 	}
 }
 
-
-//////////////////////////////////////////
-// EJEMPLOS  
-//////////////////////////////////////////
+// Ejemplos
 
 i=20;
 
 translate([0,-i,0])
-	arm_cylindrical (arm=[20,8,70],hand=[25,6,65]);
+	arm_cylindrical(	arm=[25,15,60],hand=[20,8,180]);
 
 translate([0,i,0])
-	arm_quadrangle(arm=[22,6,70],hand=[32,5,4]);
+	arm_quadrangle(arm=[22,8,70],hand=[20,5,8]);
 
 

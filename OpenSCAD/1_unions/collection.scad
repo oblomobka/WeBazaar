@@ -3,9 +3,9 @@
 // GPL license
 
 // Librerías que siguen una ruta relativa a este archivo
-include <helpers/presets.scad>
-include <helpers/external_elements.scad>
-use <helpers/external_elements_modules.scad>
+include <../2_helpers/presets_unions.scad>
+include <../2_helpers/external_elements.scad>
+use <../2_helpers/external_elements_modules.scad>
 
 use <shaft.scad>
 use <magnet.scad>
@@ -106,7 +106,7 @@ difference(){
     POINT(h=h_dodecahedron, face=FACE_4)            
         socket (pin=[12,15,SIMPLE]);
     POINT(h=h_dodecahedron, face=FACE_6)            
-        shaft(dowel=[8,20],deep=0.5,play=0.2);
+        shaft_dowel(dowel=[8,20],deep=0.5,play=0.2);
     POINT(h=h_dodecahedron, face=FACE_5)            
         shaft_base (base=[15,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_7)            

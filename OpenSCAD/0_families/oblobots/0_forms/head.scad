@@ -1,166 +1,17 @@
-// head[OBLOBOTS]
-// (c) Jorge Medal (@oblomobka) - Sara Alvarellos (@trecedejunio) 2015.04 - v.12
+// head [OBLOBOTS] v.12
+// preform
+// (c) Jorge Medal (@oblomobka) 2015.09
 // GPL license
 
-//include <../helpers/external_elements.scad>
-include <../helpers/presets.scad>
-include <../helpers/limits.scad>
+include <../2_helpers/external_elements.scad>
+include <../2_helpers/presets_oblobots.scad>
+include <../2_helpers/limits_oblobots.scad>
 
-use <../../../utilities/functions_oblomobka.scad>
-use <../../../utilities/solids_oblomobka.scad>
+use <oblomobka/functions.scad>
+use <oblomobka/shapes.scad>
 use <parts.scad>
 
-//////////////////////////////////////////
-// CABEZAS CON CURVAS  
-//////////////////////////////////////////
-
-module head_spherical (		head=[30,35,40], 			//	[d1,d2,h]
-							brain=[3,2],				// 	[altura,borde]
-							E=0,						// 	Tipo de ojo:	0 -> Sin ojo
-													//				1 -> hueco circ rebajado
-													//				2 -> hueco circ con reborde
-													//				3 -> cono ciego
-													//				4 -> 
-							eye=[12,5,3],			// 	[d,h,edge]
-							eye_expression=[-45,50],	// 	[exp1,exp2] valores de expresión de los ojos	
-							eye_position=[20,50],		// 	[sep,z] posición de los ojos	
-							){
-
-// valores con límites: acotados entre un máximo y un mínimo (los valores límite están en <limits_oblobots.scad>)
-ds_head=lim(ds_head_minmax[0],head[1],ds_head_minmax[1]);		// medida de la cabeza: diámetro de la esfera
-hs_head=lim(ds_head,head[2],h_head_minmax[1]);					// medida de la cabeza: altura
-db_head=lim(db_head_minmax[0],head[0],db_head_minmax[1]);		// medida de la cabeza: diámetro de base plana
-
-d_eye=lim(d_eye_minmax[0],eye[0],(d1_head+d2_head)/2);				// Diámetro ojo (para tipos 1 y 3) 
-h_eye=lim(h_eye_minmax[0],eye[1],h_eye_minmax[1]);			// lo que sobresale el ojo (para tipos 2 y 3)
-edge_eye=lim(edge_eye_minmax[0],eye[2],d_eye/2-3);
-
-angle_eye_expression=eye_expression[0];				
-frown_eye_expression=lim(frown_eye_expression_minmax[0],eye_expression[1],frown_eye_expression_minmax[1]);	// [0:100] 
-bridge_eye_position=lim(bridge_eye_position_minmax[0],eye_position[0],bridge_eye_position_minmax[1]);		// [0:100] 
-f_h_eye_position=lim(f_h_eye_position_minmax[0],eye_position[1],f_h_eye_position_minmax[1]);	
-
-
-// variables condicionadas a los valores de entrada
-
-// relaciones necesarias para determinar la posición de los ojos en el volumen cabeza
-h_edge=5;
-h_eye_position=h_edge+d_eye/2+f_h_eye_position*(h_head-d_eye-2*h_edge)/f_h_eye_position_minmax[1];
-d_i_eye_position=di_cone(d1_head,d2_head,h_head,h_eye_position);			// diámetro intermedio de la cabeza, para posicionar los ojos
-r_eye_position=r_circle_intersection(d_i_eye_position,d_eye);
-
-minimal=atan2(d_eye/2,r_eye_position)+1;
-maximal=90-minimal;
-
-angle_eye_position=minimal+bridge_eye_position*(maximal-atan2(d_eye/2,r_eye_position))/bridge_eye_position_minmax[1];
-
-$fn=50;
-
-// Volumen
-if(E<=0){
-
-    cone_sphere (d2=ds_head,d1=db_head,h=hs_head);
-
-}
-else{
-if(E==1){
-	// hueco en la parte superior de la cabeza
-	empty_brain_cylindrical()
-	difference(){
-		// Volumen de la cabeza
-		cylinder(r1=d1_head/2,r2=d2_head/2,h=h_head);
-		// Colocación de los ojos en la cabeza
-		move_eyes_conic_subtraction ()
-				// Forma del ojo
-				difference(){
-					cylinder(r=d_eye/2,h=h_eye);
-						rotate([0,0,angle_eye_expression])
-							translate([0,(2+(2*frown_eye_expression/frown_eye_expression_minmax[1]))*d_eye/4,h_head/2-1])
-								cube([d_eye,d_eye,h_head],center=true);
-					}
-		}
-	}
-	else{
-	if(E==2){
-		// hueco en la parte superior de la cabeza
-		empty_brain_cylindrical()
-			difference(){
-					union(){
-						// Volumen de la cabeza
-						cylinder(r1=d1_head/2,r2=d2_head/2,h=h_head);
-						// Colocación de los ojos en la cabeza
-						move_eyes_conic_subtraction ()
-						// Forma del ojo
-						difference(){
-							cylinder(r=d_eye/2,h=d_i_eye_position/2-r_eye_position);
-							rotate([0,0,angle_eye_expression])
-								translate([0,(2+(2*frown_eye_expression/frown_eye_expression_minmax[1]))*d_eye/4,h_head/2])
-									cube([d_eye,d_eye,h_head+0.05],center=true);
-							}
-						}
-					move_eyes_conic_subtraction ()
-						difference(){
-							translate([0,0,-1])
-								cylinder(r=(d_eye-2*edge_eye)/2,h=h_eye+1);
-							translate([0,0,-1])
-							rotate([0,0,angle_eye_expression])
-								translate([0,(2+(2*frown_eye_expression/frown_eye_expression_minmax[1]))*d_eye/4,h_head/2-1])
-									cube([(d_eye+2*edge_eye),(d_eye+2*edge_eye),h_head],center=true);
-							}
-					}
-			}
-			
-			else{
-				if(E>=3){
-					// hueco en la parte superior de la cabeza
-					empty_brain_cylindrical()
-						union(){
-						// Volumen de la cabeza
-							cylinder(r1=d1_head/2,r2=d2_head/2,h=h_head);
-							// Colocación de los ojos en la cabeza
-							move_eyes_conic_addition ()
-								// Forma del ojo
-								rotate([0,180,0])
-								blindcone(d=d_eye);
-							}
-					
-					}
-				}
-			}
-	}
-
-
-
-// Modulos auxiliares 
-
-module move_eyes_conic_subtraction	(){
-
-	for(i=[0,1]){
-		mirror([i,0,0])
-			rotate ([0,0,angle_eye_position])
-				translate ([0,d_i_eye_position/2+0.05,h_eye_position])
-					rotate ([atan2(h_head,(d2_head-d1_head)/2),0,0])
-						children(0);
-			}
-}
-
-module move_eyes_conic_addition	(){
-
-	for(i=[0,1]){
-		mirror([i,0,0])
-			rotate ([0,0,angle_eye_position])
-				translate ([0,r_eye_position+0.05,h_eye_position])
-					rotate ([atan2(h_head,(d2_head-d1_head)/2),0,0])
-						children(0);
-			}
-	}
-
-
-
-// Fin de los módulos auxiliares
-
-}
-
+// Módulos
 module head_cylindrical (	head=[30,35,40], 			//	[d1,d2,h]
 							brain=[3,2],				// 	[altura,borde]
 							E=1,						// 	Tipo de ojo:	0 -> Sin ojo
@@ -324,18 +175,14 @@ module empty_brain_cylindrical	(){
 }
 
 
-//////////////////////////////////////////
-// CABEZAS CON RECTAS
-//////////////////////////////////////////
-
 module head_quadrangle(	head=[30,35,40], 			//	[x,y,z]
 						brain=[3,2],				// 	[altura,borde]
 						E=1,						// 	Tipo de ojo:	0 -> Sin ojo
-												//				1 -> hueco circ rebajado
-												//				2 -> cono interior
-												//				3 -> cono ciego
-												//				4 -> 
-						eye=[12,5,3],			// 	[d,h,edge]
+                                                    //				1 -> hueco circ rebajado
+                                                    //				2 -> cono interior
+                                                    //				3 -> cono ciego
+                                                    //				4 -> 
+						eye=[12,5,3],			    // 	[d,h,edge]
 						eye_expression=[-45,50],	// 	[exp1,exp2] valores de expresión de los ojos	
 						eye_position=[20,50],		// 	[sep,z] posición de los ojos	
 						){
@@ -446,8 +293,7 @@ if(E==1){
 }
 
 
-// ----- Modulos auxiliares ------------
-
+// Modulos auxiliares
 module move_eyes_cube	(){
 
 	for(i=[0,1]){
@@ -499,40 +345,24 @@ module empty_brain_quadrangle	(){
 			cube([x_brain,y_brain,h_brain],center=true);
 		}
 	}
-
 // Fin de los módulos auxiliares 
-
 }
 
-
-//////////////////////////////////////////
-// EJEMPLOS
-//////////////////////////////////////////
-
+// Ejemplos
 i=80;
 
 translate([0*i,0*i,0])
-	head_quadrangle(		head=[60,50,60],
-                            brain=[5,3],
-                            E=3,	
-                            eye=[20,5],
-                            eye_expression=[-50,30],
-                            eye_position=[30,0]);
+	head_quadrangle(	head=[60,50,60],
+						brain=[5,3],
+						E=3,	
+						eye=[20,5],
+						eye_expression=[-50,30],
+						eye_position=[30,0]);
 
 translate([1*i,0*i,0])
-	head_cylindrical(		head=[60,45,60],
-                            brain=[5,3],
-                            E=2,	
-                            eye=[20,3,3],
-                            eye_expression=[-45,60],
-                            eye_position=[0,12]);
-
-translate([-1*i,0*i,0])                       
-    head_spherical (		head=[30,35,40], 			
-							brain=[3,2],				
-							E=1,						
-							eye=[12,5,3],			
-							eye_expression=[-45,50],	
-							eye_position=[20,50]);
-
-
+	head_cylindrical(	head=[60,45,60],
+						brain=[5,3],
+						E=2,	
+						eye=[20,3,3],
+						eye_expression=[-45,60],
+						eye_position=[0,12]);

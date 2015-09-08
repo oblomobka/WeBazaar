@@ -1,19 +1,19 @@
-// parts [OBLOBOTS] (partes que estarán integradas en los volúmenes)
-// (c) Jorge Medal (@oblomobka) - Sara Alvarellos (@trecedejunio) 2015.04 v.12
+// parts [OBLOBOTS] v.08
+// partes que estarán integradas en los volúmenes
+// (c) Jorge Medal (@oblomobka) 2015.09
 // GPL license
 
-include <../helpers/presets.scad>
+include <../2_helpers/external_elements.scad>
+include <../2_helpers/presets_oblobots.scad>
 
-use <../../../utilities/functions_oblomobka.scad>
-use <../../../utilities/solids_oblomobka.scad>
+use <oblomobka/shapes.scad>
+use <oblomobka/solids.scad>
+use <oblomobka/functions.scad>
 
-////////////////////////////////////////////////
-// ELEMENTOS DECORATIVOS  
-////////////////////////////////////////////////
-{
-// Cono truncado ciego, falda 45º
-module blindcone (d=50){	// diámetro del cono
-				
+
+// Geometría particular. Cono truncado ciego, falda 45º
+module blindcone (  d=50	// diámetro del cono
+                    ){
 $fn=50;
 
 union(){
@@ -25,11 +25,7 @@ union(){
 	cylinder (r1=7*d/32,r2=d/32,h=7*d/32);
 	}
 }
-}
-////////////////////////////////////////////////
-// MÓDULOS PARA ALOJAR LEDS  
-////////////////////////////////////////////////
-{
+
 // Cono truncado hueco. Funciona como alojamiento para un led, el led entra holgado
 module ledsocket_simple (	ledn=5,				// Valor nominal del led
                             h=4,					// altura del cono
@@ -42,7 +38,7 @@ edge=1;							// borde del hueco
 ledr=ledn+1;
 socket=ledr+1;
 lash=socket+2*edge;				// base del cono
-fring=1;						// factor que define la falda del cono 1=45º
+fring=1;							// factor que define la falda del cono 1=45º
 ring=lash+2*h*fring;
 
 exp1=expression[0];				// [-45:45]	factor para la expresión
@@ -65,12 +61,11 @@ difference(){
 	}
 }
 
-
 // Cono truncado hueco. Funciona como alojamiento para un led, el led entra a presión
 module ledsocket_press (	ledn=5,				// Valor nominal del led
-                            h=4,					// altura del cono	
-                            expression=[0,100]					
-                            ){
+						h=4,					// altura del cono	
+						expression=[0,100]					
+						){
 $fn=50;
 
 hi=1.2;
@@ -109,29 +104,23 @@ difference(){
 	}
 }
 
-}
+// Ejemplos 
 
-
-////////////////////////////////////////////////
-// EJEMPLOS  
-////////////////////////////////////////////////
 i=40;
 
-translate([0,0,0]){	
-    blindcone (d=25);	
-    translate ([0,i,0])
-        blindcone (d=12);	
-    translate ([0,i*2,0])
-        blindcone (d=21);	
-}
+blindcone (d=25);	
+translate ([0,i,0])
+	blindcone (d=12);	
+translate ([0,i*2,0])
+	blindcone (d=21);
+				
+translate ([-i,0,0])
+	ledsocket_press (ledn=5,h=4,expression=[0,100]);
+translate ([-i,i,0])
+	ledsocket_simple (ledn=3,h=3,expression=[0,100]);
+translate ([-i,i*2,0])
+	ledsocket_press (ledn=5,h=6,expression=[45,20]);
+translate ([-i,i*3,0])
+	ledsocket_simple (ledn=5,h=4,expression=[-25,35]);
 
-translate([i,0,0]){				
-    translate ([0,0,0])
-        ledsocket_press (ledn=5,h=4,expression=[0,100]);
-    translate ([0,i,0])
-        ledsocket_simple (ledn=3,h=3,expression=[0,100]);
-    translate ([0,i*2,0])
-        ledsocket_press (ledn=5,h=6,expression=[45,20]);
-    translate ([0,i*3,0])
-        ledsocket_simple (ledn=5,h=4,expression=[-25,35]);
-}
+
