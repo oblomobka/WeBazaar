@@ -1,5 +1,5 @@
-// magnet [UNIONS] v.02
-// (c) Jorge Medal (@oblomobka)  2015.08
+// magnet [UNIONS] v.03
+// (c) Jorge Medal (@oblomobka)  2015.09
 // GPL license
 
 // Librerías que siguen una ruta relativa a este archivo
@@ -74,18 +74,14 @@ module magnet_loose (   magnet=[6,2],
     h=magnet[1];                        
                                 
     // diámetro de la esfera donde el imán puede girar libremente
-    d_spin=sqrt(pow(d,2)+pow(h,2));
+    d_spin=sqrt(pow(d,2)+pow(h,2))+0.5;
 
 
     union(){
         translate([0,0,-0.1])
             cube([d_spin,h,t+d_spin],center=true);
-        translate([0,0,t])       
-            cylinder (r=(d_spin)/2,h=h);
-        translate([0,0,t+h-0.05])       
-            cylinder (r2=(d_spin+play)/2,r1=(d_spin)/2,h=play/2+0.1);
-        translate([0,0,t+h+play/2])
-            cylinder (r=(d_spin+play)/2,h=d_spin+play/2-h);
+        translate([0,0,t/*+h+play/2*/])
+            cylinder (r=(d_spin+play)/2,h=d_spin+play);
         }    
 }
 module magnet_loose_base_open (  magnet=[6,2],
@@ -97,7 +93,7 @@ module magnet_loose_base_open (  magnet=[6,2],
     $fn=32;                            
     d=magnet[0];
     h=magnet[1];
-    d_spin=sqrt(pow(d,2)+pow(h,2));
+    d_spin=sqrt(pow(d,2)+pow(h,2))+0.5;
     h_base=max(base[1],d_spin+play+t-0.1);                                
                                     
 
@@ -111,11 +107,7 @@ module magnet_loose_base_open (  magnet=[6,2],
         // Resta el contenedor del iman con giro
         rotate([0,180,0])    
             union(){
-                translate([0,0,t])       
-                    cylinder (r=(d_spin)/2,h=h);
-                translate([0,0,t+h-0.05])       
-                    cylinder (r2=(d_spin+play)/2,r1=(d_spin)/2,h=play/2+0.1);
-                translate([0,0,t+h+play/2])
+                translate([0,0,t/*+h+play/2*/])
                     cylinder (r=(d_spin+play)/2,h=5*d_spin+play/2-h);
             }   
         }                           
@@ -131,7 +123,7 @@ module magnet_loose_base_close (    magnet=[6,2],
     d=magnet[0];
     h=magnet[1];
                                     
-    d_spin=sqrt(pow(d,2)+pow(h,2));
+    d_spin=sqrt(pow(d,2)+pow(h,2))+0.5;
 
     //translate([0,0,base[1]])
     difference(){
@@ -142,12 +134,14 @@ module magnet_loose_base_close (    magnet=[6,2],
             }
         // Resta el contenedor del iman con giro
         rotate([0,180,0])    
-            magnet_loose (  magnet=magnet,t=t,play=play);
+            magnet_loose (  magnet=magnet, t=t, play=play);
         }                           
     }
 
 }
 
+
+// Ejemplos
 i=30;
 
 translate([0,0,0]){
@@ -185,7 +179,7 @@ translate([0,i,0]){
     translate([0,0,0]){
         magnet_fixed_base ( magnet=[6,2],
                             play=[0.3,0,2],
-                            base=[18,4,50]);
+                            base=[15,4,4]);
         rotate([180,0,0])
         magnet ( magnet=[6,2]);
     }
@@ -225,7 +219,7 @@ translate([0,2*i,0]){
     translate([i,0,0]){
         sector(270) // para ver el interior. Cegar esta linea para generar stl
         magnet_loose_base_open ( magnet=[6,2],
-                            t=0.6,
+                            t=1,
                             play=0.6,
                             base=[10,1,8]);
         
@@ -238,16 +232,16 @@ translate([0,2*i,0]){
         
     
     translate([2*i,0,0]){
-        sector(180)
-        magnet_loose_base_close ( magnet=[6,2],
-                            t=0.6,
-                            play=0.6,
-                            base=[10,10,50]);
+        sector(270)
+        !magnet_loose_base_close (  magnet=[6,2],
+                                    t=1,
+                                    play=0.6,
+                                    base=[16,9.9,8]);
         
         // Imán 
         translate([0,0,-(0.5+sqrt(pow(6,2)+pow(2,2))/2)])
             rotate([rands(0,90,1)[0],rands(0,90,1)[0],rands(0,90,1)[0]])
-            translate([0,0,-1])
+            translate([0,0,-2])
                 magnet(6,2);
         }
     

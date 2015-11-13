@@ -84,16 +84,16 @@ module socket_o_ring (  h_pin=12,           // longitud del pin
     translate([0,0,-0.05])
     union(){
         translate([0,0,0])
-            cylinder (r=d_pin/2, h=h_pin);
+            cylinder (r=(d1+play)/2, h=h_pin);
         if(h_pin>10){
-            for(i=[h_pin-2-1-d2,3]){
+           for(i=[h_pin-2-1-d2,3]){
                 translate([0,0,i])
-                    torusOD(d1=d1+play,d2=d2+play,res=32);
+                    torusOD(d1=d1+2*play,d2=d2+play,res=32);
                 }
             }
         else{
             translate([0,0,h_pin-2-0.5-d2])
-                torusOD(d1=d1+play,d2=d2+play,res=32);
+                torusOD(d1=d1+2*play,d2=d2+play,res=32);
             }
         }
 }
@@ -129,7 +129,7 @@ translate([0,0,0]){
         pin_o_ring_base (   ring=[9,1.5],
                             h_pin=14,
                             play=0.2,
-                            base=[12,4,50]);
+                            base=[16,4,50]);
         translate([0,0,14-2-1-1.55])
             o_ring(d1=9,d2=1.5);
         translate([0,0,3-0.05])
@@ -151,10 +151,10 @@ translate([0,i,0]){
     translate([0,0,0]){
         color("green")sector(210)
         difference(){
-            cylinder(r=10,h=20);
+            prism_circumscribed(d=20,h=20,n=50);
             socket_o_ring (     ring=[9,1.5],
                                 h_pin=12,
-                                play=0.1
+                                play=0.5
                                 );
             }        
         pin_o_ring_base (   ring=[9,1.5],

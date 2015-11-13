@@ -1,5 +1,5 @@
 // external elements modules [UNIONS] v.13
-// librería de elementos externos comerciales (botones automáticos, espigas de madera baterías, ...) 
+// librería de elementos externos comerciales (botones automáticos, espigas de madera, baterías, ...) 
 // (c) Jorge Medal (@oblomobka) 2015.09 
 // GPL license
 
@@ -88,10 +88,10 @@ module suction_pad (head=[7,4,4,2.5], suction=[20,7]){
     }  
 }
 
-suction_pad();
+!suction_pad();
 
 fastener();
 
 o_ring();
 
-!magnet();
+magnet();

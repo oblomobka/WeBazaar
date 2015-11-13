@@ -1,5 +1,5 @@
-// snap fasteners [UNIONS] v.03
-// (c) Jorge Medal (@oblomobka)  2015.08
+// snap fasteners [UNIONS] v.04
+// (c) Jorge Medal (@oblomobka)  2015.09
 // GPL license
 
 // Librerías que siguen una ruta relativa a este archivo
@@ -23,20 +23,42 @@ module snap_fasteners (    model=PRYM_SNAP_FASTENERS_11,
                            ){										
     $fn=50;
 
-    h=model[5];
-    d=model[0];
-    play=0.7;       // este ajuste hace una diferencia entre colocar el boton macho y el boton hembra. Puede variar segun el modelo
-
-    if(type==0){
-        translate([0,0,-0.1])
-            cylinder (r=d/2,h=h);
-        }
-    else{
-        if(type==1){
-            translate([0,0,-0.1-play])
-                cylinder (r=d/2,h=h);
+    h_plug=model[5];
+    h_socket=model[1];
+    h_socket_int=model[3];                           
+    d_plug=model[4];
+    d_socket=model[0];
+    d_socket_int=model[2];                           
+                               
+    if(model[8]==0){
+        if(type==0){    // socket
+            translate([0,0,-0.1])
+                cylinder (r=d_socket/2,h=h_socket*3/4);
+            }
+        else{           // plug
+            if(type==1){
+                translate([0,0,-0.1])
+                    cylinder (r=d_plug/2,h=h_plug*3/4);
+                }
             }
         }
+    if(model[8]==1){
+        if(type==0){    // socket
+            translate([0,0,-0.1]){
+                cylinder (r=d_socket/2,h=h_socket*3/4);
+                cylinder (r=d_socket_int/2,h=h_socket_int+1);
+            }
+                
+            }
+        else{           // plug
+            if(type==1){
+                translate([0,0,-0.1])
+                    cylinder (r=d_plug/2,h=h_plug*3/4);
+                }
+            }
+        
+    }
+    
 }
 
 
@@ -63,7 +85,7 @@ module snap_fasteners_base (   model=PRYM_SNAP_FASTENERS_11,
 
 
 // EJEMPLOS
-i=20;
+i=25;
 lado=20;
 
 rotate([180,0,0])
@@ -75,27 +97,39 @@ difference(){
 		cube([lado,lado,lado],center=true);
         snap_fasteners(model=PRYM_SNAP_FASTENERS_11, type=SOCKET);
         translate([0,0,lado])rotate([0,180,0])
-            snap_fasteners(model=PRYM_SNAP_FASTENERS_11, type=SOCKET);
+            snap_fasteners(model=PRYM_SNAP_FASTENERS_17, type=SOCKET);
         translate([lado/2,0,lado/2])rotate([0,-90,0])
-            snap_fasteners(model=PRYM_SNAP_FASTENERS_11, type=SOCKET);
+            snap_fasteners(model=PRYM_RING_FASTENERS_11, type=SOCKET);
         translate([0,lado/2,lado/2])rotate([90,90,0])
-            snap_fasteners(model=PRYM_SNAP_FASTENERS_11, type=PLUG);
+            snap_fasteners(model=PONTEJOS_RING_FASTENERS_12, type=PLUG);
         translate([-lado/2,0,lado/2])rotate([0,90,0])
-            snap_fasteners(model=PRYM_SNAP_FASTENERS_11, type=SOCKET);
+            snap_fasteners(model=PRYM_SNAP_FASTENERS_17, type=PLUG);
         translate([0,-lado/2,lado/2])rotate([-90,90,0])
             snap_fasteners(model=PRYM_SNAP_FASTENERS_11, type=PLUG);
 }
 
+
 translate([0,i,0]){
-    translate([2*i,0,0]){
+    translate([i,0,0]){
         snap_fasteners_base (model=PRYM_SNAP_FASTENERS_11, type=SOCKET, base=[15,6,50]);
-        fastener( model=PRYM_SNAP_FASTENERS_11,
-           type=SOCKET);
+        *fastener( model=PRYM_SNAP_FASTENERS_11, type=SOCKET);
     }
     
     translate([0,0,0]){
         snap_fasteners_base (model=PRYM_SNAP_FASTENERS_11, type=PLUG, base=[15,6,50]);
-        fastener( model=PRYM_SNAP_FASTENERS_11,
-           type=PLUG);
+        *fastener( model=PRYM_SNAP_FASTENERS_11, type=PLUG);
+    }
+    
+    translate([2*i,0,0]){
+        snap_fasteners_base (model=PONTEJOS_RING_FASTENERS_12, type=PLUG, base=[18,12,6]);
+    }
+    translate([3*i,0,0]){
+        snap_fasteners_base (model=PONTEJOS_RING_FASTENERS_12, type=SOCKET, base=[18,12,6]);
+    }
+    translate([4*i,0,0]){
+        snap_fasteners_base (model=PRYM_RING_FASTENERS_11, type=PLUG, base=[20,4,4]);
+    }
+    translate([5*i,0,0]){
+        snap_fasteners_base (model=PRYM_RING_FASTENERS_11, type=SOCKET, base=[20,4,4]);
     }
 }

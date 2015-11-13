@@ -1,5 +1,5 @@
-// suction_pad [UNIONS] v.02
-// (c) Jorge Medal (@oblomobka)  2015.08
+// suction_pad [UNIONS] v.03
+// (c) Jorge Medal (@oblomobka)  2015.09
 // GPL license
 
 // Librerías que siguen una ruta relativa a este archivo
@@ -24,14 +24,15 @@ module suction_pad_shaft (  suction_pad_head=[7,4,4,3]){
     d_neck=suction_pad_head[2];
     h_neck=suction_pad_head[3];
     play=0.3;
+    extra_neck=1;
         
     union(){
         translate([0,0,h_neck-0.5])
             cylinder(r=d_head/2+play ,h=h_head+play );
         translate([0,0,(h_neck-0.5)/2])
-            cylinder(r=(d_neck+1)/2+play ,h=h_neck );
+            cylinder(r=(d_neck+extra_neck)/2+play ,h=h_neck );
         translate([0,0,-h_neck+0.1])
-            cylinder(r1=d_head/2 ,r2=(d_neck+1)/2+play ,h=h_neck+(h_neck-0.5)/2 );
+            cylinder(r1=d_head/2 ,r2=(d_neck+extra_neck)/2+play ,h=h_neck+(h_neck-0.5)/2 );
     }  
 }
 
@@ -70,28 +71,28 @@ i=30;
 translate([0,0,0]){
     sector(270)
     translate([0,0,0])
-        difference(){
+         difference(){
             cylinder(r=15,h=10);
             suction_pad_shaft (suction_pad_head=[7,4,4,3]  );
             }
             
             suction_pad (head=[7,4,4,3], suction=[20,7]);
-    translate([i,0,0])
-        suction_pad_shaft (suction_pad_head=[12,6,5,3]  );
+    /*translate([i,0,0])
+        suction_pad_shaft (suction_pad_head=[12,6,5,3]  );*/
 
 }
 
 translate([0,i,0]){
-    sector(270)
+    !sector(270)
     translate([3*i,0,0]){
-        suction_pad_base (suction_pad_head=[7,4,4,3],base=[15,8,50]);
+        suction_pad_base (suction_pad_head=[7,4,4,2.5],base=[15,8,50]);
     rotate([0,180,0])    
-        suction_pad (head=[7,4,4,3], suction=[20,7]);
+        suction_pad (head=[7,4,4,2.5], suction=[20,7]);
     }
     translate([i,0,0]){
-        suction_pad_base (suction_pad_head=[12,6,5,3],base=[20,6,8]);
+        suction_pad_base (suction_pad_head=[12,5,8,2],base=[24,10,50]);
         rotate([0,180,0])    
-            suction_pad (head=[12,6,5,3], suction=[30,9]);
+            suction_pad (head=[12,5,8,2], suction=[40,12]);
     }
     translate([2*i,0,0]){
         suction_pad_base (suction_pad_head=[7,4,4,3],base=[12,3,5]);

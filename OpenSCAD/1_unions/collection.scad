@@ -100,27 +100,27 @@ difference(){
     //POINT(h=h_dodecahedron, face=FACE_1)            
     //   shaft_base (base=[d,h,n],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_2)            
-        shaft_base (base=[15,5,8],play=[p1,p2]);
+        shaft_base (base=[16,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_3)            
-        shaft_base (base=[15,8,8],play=[p1,p2]);
+        shaft_base (base=[16,8,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_4)            
-        socket (pin=[12,15,SIMPLE]);
+        socket (pin=[10,15,SIMPLE]);
     POINT(h=h_dodecahedron, face=FACE_6)            
-        shaft_dowel(dowel=[8,20],deep=0.5,play=0.2);
+        shaft_dowel(dowel=[6,40],deep=0.5,play=0.2);
     POINT(h=h_dodecahedron, face=FACE_5)            
-        shaft_base (base=[15,5,8],play=[p1,p2]);
+        shaft_base (base=[16,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_7)            
-        shaft_base (base=[15,5,8],play=[p1,p2]);
+        shaft_base (base=[16,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_8)            
-        shaft_base (base=[15,5,8],play=[p1,p2]);
+        shaft_base (base=[16,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_9)            
-        shaft_base (base=[15,8,8],play=[p1,p2]);
+        shaft_base (base=[16,10,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_10)            
-        shaft_base (base=[15,5,8],play=[p1,p2]);
+        shaft_base (base=[16,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_11)            
-        shaft_base (base=[15,5,8],play=[p1,p2]);
+        shaft_base (base=[16,5,8],play=[p1,p2]);
     POINT(h=h_dodecahedron, face=FACE_12)            
-        shaft_base (base=[15,5,8],play=[p1,p2]);
+        shaft_base (base=[16,5,8],play=[p1,p2]);
                
 }
 
@@ -129,56 +129,153 @@ difference(){
 
     POINT(h=h_dodecahedron, face=FACE_2){            
         rotate([0,180,0]){    
-        pin_o_ring_base (   ring=[9,1.7],
-                            h_pin=12,
+        pin_o_ring_base (   ring=[9,1.5],
+                            h_pin=14,
                             play=0.2,
-                            base=[15,5,8]);
+                            base=[16,5,8]);
         color("black",0.8)
-        translate([0,0,12-2-1.7-1.05])
-            o_ring(d1=9,d2=1.7);
-        translate([0,0,12-7-1-1.05])
-            o_ring(d1=9,d2=1.7);
+        translate([0,0,14-2-1.5-1.05])
+            o_ring(d1=9,d2=1.5);
+        translate([0,0,14-9-1-1.05])
+            o_ring(d1=9,d2=1.5);
             }}
-    POINT(h=h_dodecahedron, face=FACE_3)
+    POINT(h=h_dodecahedron, face=FACE_3){
         rotate([0,180,0])
-        magnet_loose_base_close ( magnet=[6,2],
-                            t=0.6,
-                            play=0.6,
-                            base=[15,8,8]);
+        suction_pad_base (suction_pad_head=[7,4,4,2.5],base=[16,8,8]);
+        suction_pad (head=[7,4,4,2.5], suction=[30,9]);
+    }
+        
     *POINT(h=h_dodecahedron, face=FACE_4)            
         shaft_base (shaft=[d,h],play=[p1,p2],polygonal=n);
     POINT(h=h_dodecahedron, face=FACE_5)            
-        rotate([0,180,0])
-        total_joint_sphere(pin=[15,4],mode=1,angle=180,play=0.1,polygonal=8,res=32);
+        rotate([0,180,90])
+        total_joint_sphere(pin=[16,4],mode=1,angle=216,play=0.1,polygonal=8,res=32);
     *POINT(h=h_dodecahedron, face=FACE_6)            
         shaft_base (shaft=[d,h],play=[p1,p2],polygonal=n);
     POINT(h=h_dodecahedron, face=FACE_8) 
         rotate([0,180,0])
-        spike_base (spike=[8,13,0.6,80],base=[15,5,8]);
+        spike_base (spike=[10,13,0.6,80],base=[16,5,8]);
     POINT(h=h_dodecahedron, face=FACE_7){            
         rotate([0,180,0])    
         magnet_fixed_base ( magnet=[6,2],
                             play=[0.3,0,2],
-                            base=[15,5,8]);
+                            base=[16,5,8]);
                 magnet(6,2);}
-    POINT(h=h_dodecahedron, face=FACE_9){
+    POINT(h=h_dodecahedron, face=FACE_9)
         rotate([0,180,0])
-        suction_pad_base (suction_pad_head=[7,4,4,3],base=[15,8,8]);
-        suction_pad (head=[7,4,4,2.5], suction=[20,7]);
-    }
+        magnet_loose_base_close ( magnet=[6,2],
+                            t=1,
+                            play=0.6,
+                            base=[16,10,8]);
     POINT(h=h_dodecahedron, face=FACE_10)
         rotate([0,180,0]){
-        snap_fasteners_base (model=PRYM_SNAP_FASTENERS_11, type=SOCKET, base=[15,5,8]);
-        fastener( model=PRYM_SNAP_FASTENERS_11,type=SOCKET);
+        snap_fasteners_base (model=PONTEJOS_RING_FASTENERS_12, type=SOCKET, base=[16,5,8]);
+        fastener( model=PONTEJOS_RING_FASTENERS_12,type=SOCKET);
             }
     POINT(h=h_dodecahedron, face=FACE_11)
-        rotate([0,180,0])
-        pin (   pin=[9,15,TABNORMAL],
-                base=[15,15,5,8],
+        !rotate([0,180,0])
+        pin (   pin=[8,12,TABNORMAL],
+                base=[16,16,5,8],
                 play=-0.1);
-    POINT(h=h_dodecahedron, face=FACE_12) 
+    POINT(h=h_dodecahedron, face=FACE_12)
+       translate([0,0,5])
+       rotate([0,180,0])
+        //total_joint_cone(pin=[16,4],mode=2,angle=360,play=0.1,polygonal=8,res=32);
+        TotalJointCone(pin=[16,4],mode=2,angle=360,play=0.1,,z=5,polygonal=8,res=32)
+             
+                prism_circumscribed(d=16,h=5,n=8);
+}
+
+}
+
+// DODECAEDRO 2
+rotate([0,0,30]){
+color("blue",1)
+difference(){
+    dodecahedron(h_dodecahedron);
+    
+    //POINT(h=h_dodecahedron, face=FACE_1)            
+    //   shaft_base (base=[d,h,n],play=[p1,p2]);
+    POINT(h=h_dodecahedron, face=FACE_2)
+        socket_o_ring (     ring=[9,1.5],
+                                h_pin=14,
+                                play=0.5
+                                );
+        //shaft_base (base=[16,5,8],play=[p1,p2]);
+    POINT(h=h_dodecahedron, face=FACE_3)            
+        shaft_base (base=[16,8,8],play=[p1,p2]);
+    POINT(h=h_dodecahedron, face=FACE_4)            
+        shaft_base (base=[16,5,8],play=[p1,p2]);
+    POINT(h=h_dodecahedron, face=FACE_6)            
+        shaft_dowel(dowel=[6,40],deep=0.5,play=0.2);
+    POINT(h=h_dodecahedron, face=FACE_5)            
+        shaft_base (base=[16,5,8],play=[p1,p2]);
+    POINT(h=h_dodecahedron, face=FACE_7)            
+        shaft_base (base=[16,5,8],play=[p1,p2]);
+    POINT(h=h_dodecahedron, face=FACE_8)            
+        shaft_base (base=[16,5,8],play=[p1,p2]);
+    POINT(h=h_dodecahedron, face=FACE_9)            
+        shaft_base (base=[16,10,8],play=[p1,p2]);
+    POINT(h=h_dodecahedron, face=FACE_10)            
+        shaft_base (base=[16,5,8],play=[p1,p2]);
+    POINT(h=h_dodecahedron, face=FACE_11)            
+        socket (pin=[8,12,TABFINE]);
+    POINT(h=h_dodecahedron, face=FACE_12)            
+        shaft_base (base=[16,5,8],play=[p1,p2]);
+               
+}
+
+
+{
+
+    POINT(h=h_dodecahedron, face=FACE_3){
         rotate([0,180,0])
-        total_joint_cone(pin=[15,4],mode=2,angle=360,play=0.1,polygonal=8,res=32);
+        suction_pad_base (suction_pad_head=[7,4,4,3],base=[16,8,8]);
+        suction_pad (head=[7,4,4,3], suction=[30,9]);
+    }
+        
+    POINT(h=h_dodecahedron, face=FACE_4)            
+        rotate([0,180,0])
+        pin (   pin=[10,15,SIMPLE],
+                base=[16,16,5,8],
+                play=0);
+    POINT(h=h_dodecahedron, face=FACE_5)            
+        rotate([0,180,90])
+        total_joint_sphere(pin=[16,4],mode=1,angle=216,play=0.1,polygonal=8,res=32);
+    *POINT(h=h_dodecahedron, face=FACE_6)            
+        shaft_base (shaft=[d,h],play=[p1,p2],polygonal=n);
+    POINT(h=h_dodecahedron, face=FACE_8) 
+        rotate([0,180,0])
+        spike_base (spike=[13,18,1,70],base=[16,5,8]);
+    POINT(h=h_dodecahedron, face=FACE_7){            
+        rotate([0,180,0])    
+        magnet_fixed_base ( magnet=[6,2],
+                            play=[0.3,0,2],
+                            base=[16,5,8]);
+                magnet(6,2);}
+    POINT(h=h_dodecahedron, face=FACE_9)
+        rotate([0,180,0])
+        magnet_loose_base_close ( magnet=[6,2],
+                            t=1,
+                            play=0.6,
+                            base=[16,10,8]);
+    POINT(h=h_dodecahedron, face=FACE_10)
+        rotate([0,180,0]){
+        snap_fasteners_base (model=PONTEJOS_RING_FASTENERS_12, type=PLUG, base=[16,5,8]);
+        fastener( model=PONTEJOS_RING_FASTENERS_12,type=PLUG);
+            }
+    *POINT(h=h_dodecahedron, face=FACE_11)
+        rotate([0,180,0])
+        pin (   pin=[8,12,TABFINE],
+                base=[16,16,5,8],
+                play=-0.1);
+    POINT(h=h_dodecahedron, face=FACE_12)
+       translate([0,0,5])
+       rotate([0,180,0])
+        //total_joint_cone(pin=[16,4],mode=2,angle=360,play=0.1,polygonal=8,res=32);
+        TotalJointCone(pin=[16,4],mode=2,angle=360,play=0.1,,z=5,polygonal=8,res=32)
+             
+                prism_circumscribed(d=16,h=5,n=8);
 }
 
 }
