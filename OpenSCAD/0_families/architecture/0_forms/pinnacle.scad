@@ -40,11 +40,22 @@ module pinnacle_circumscribed (     n=4,
 h_sup=h/1.05;
 h_inf=h/4;
 factor_h=h_inf+f*((h_sup-h_inf)/100);
+                                        
+grieta=0;                                        
                             
 union(){
-    pyramid_circumscribed (n=n, d1=d1, d2=d2, h=factor_h);
+    difference(){
+        pyramid_circumscribed (n=n, d1=d1, d2=d2, h=factor_h);
+        if(n%2==0){
+        cylinder (d1=d1, d2=d2+grieta, h=h, $fn=n*2);
+	}
+	else{
+		rotate([0,0,90/n])
+			cylinder (d1=d1, d2=d2+grieta, h=h, $fn=n*2);
+		}
+    }
     if(n%2==0){
-        cylinder (d1=d, d2=d2, h=h, $fn=n*2);
+        cylinder (d1=d1, d2=d2, h=h, $fn=n*2);
 	}
 	else{
 		rotate([0,0,90/n])
@@ -53,8 +64,9 @@ union(){
     } 
 }
 
-
+                    
+// Ejemplos
 translate([40,0,0])
-pinnacle_side(n=3,h=35,side1=25,side2=2,f=50);
+    pinnacle_side(n=3,h=35,side1=25,side2=5,f=50);
 
-pinnacle_circumscribed(n=5,h=50,d1=32,d2=10,f=80);
+pinnacle_circumscribed(n=4,h=40,d1=30,d2=3,f=80);
